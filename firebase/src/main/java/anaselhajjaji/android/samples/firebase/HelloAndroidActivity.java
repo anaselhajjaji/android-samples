@@ -1,6 +1,8 @@
 package anaselhajjaji.android.samples.firebase;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Map;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -49,8 +51,15 @@ public class HelloAndroidActivity extends Activity {
 	    myFirebaseRef = new Firebase("https://anaware.firebaseio.com/");
 	    myFirebaseRef.child("message").addValueEventListener(new ValueEventListener() {
 		        public void onDataChange(DataSnapshot snapshot) {
-		        	list.add(snapshot.getValue().toString());
-		        	((BaseAdapter) listView.getAdapter()).notifyDataSetChanged(); 
+		        	if (snapshot.getValue() != null) {
+		        		Map<String, Object> newPost = (Map<String, Object>) snapshot.getValue();
+		        		list.clear();
+		        		for (String post : newPost.keySet())
+		        		{
+		        			list.add(post + "\r\n" + newPost.get(post));
+		        		}
+		        		((BaseAdapter) listView.getAdapter()).notifyDataSetChanged(); 
+		        	}
 		        }
 		        
 	        	public void onCancelled(FirebaseError error) {
@@ -62,7 +71,7 @@ public class HelloAndroidActivity extends Activity {
 		sendButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				if (!msgText.getText().toString().equals("")) {
-				    myFirebaseRef.child("message").setValue(msgText.getText().toString());
+				    myFirebaseRef.child("message").child((new Date()).toString()).setValue(msgText.getText().toString());
 				    msgText.setText("");
 				}
 			}
