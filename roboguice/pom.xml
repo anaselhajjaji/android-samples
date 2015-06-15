@@ -3,10 +3,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>anaselhajjaji.android.samples</groupId>
-	<artifactId>firebase</artifactId>
+	<artifactId>roboguice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>apk</packaging>
-	<name>firebase</name>
+	<name>roboguice</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -21,11 +21,11 @@
 			<version>${platform.version}</version>
 			<scope>provided</scope>
 		</dependency>
-	    <dependency>
-	    	<groupId>com.firebase</groupId>
-	    	<artifactId>firebase-client-android</artifactId>
-	    	<version>[2.2.3,)</version>
-	    </dependency>
+		<dependency>
+			<groupId>org.roboguice</groupId>
+			<artifactId>roboguice</artifactId>
+			<version>3.0.1</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>${project.artifactId}</finalName>
