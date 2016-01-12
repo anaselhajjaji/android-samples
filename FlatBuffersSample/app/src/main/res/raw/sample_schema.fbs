@@ -1,5 +1,5 @@
 table PeopleList {
-    people : [People];
+    peoples : [People];
 }
 
 table People {

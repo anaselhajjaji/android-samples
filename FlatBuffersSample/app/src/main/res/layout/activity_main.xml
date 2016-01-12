@@ -9,8 +9,46 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="anaware.flatbufferssample.MainActivity">
 
-    <TextView
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:gravity="center_horizontal|center_vertical"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:id="@+id/form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal|center_vertical">
+
+        <Button
+            android:id="@+id/jsonButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Parse JSON"/>
+        <TextView
+            android:id="@+id/jsonStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/jsonButton"
+            android:text="JSON parsing status"/>
+        <Button
+            android:id="@+id/flatbufferButton"
+            android:layout_marginTop="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/jsonStatus"
+            android:text="Parse FlatBuffer"/>
+        <TextView
+            android:id="@+id/flatbufferStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/flatbufferButton"
+            android:text="FlatBuffer parsing status"/>
+
+    </RelativeLayout>
+
+
 </RelativeLayout>
