@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private void parseFlatBuffer() {
         progressBar.setVisibility(View.VISIBLE);
         form.setVisibility(View.GONE);
-        new FlatParsing().execute(readRawResource(R.raw.sample_json));
+        new FlatParsing().execute(readRawResource(R.raw.sample_flatbuffers));
     }
 
     private void parseJson() {
@@ -117,8 +117,9 @@ public class MainActivity extends AppCompatActivity {
     private class FlatParsing extends AsyncTask<Object, Void, String> {
         @Override
         protected String doInBackground(Object... params) {
+            byte[] buffer = (byte[]) params[0];
             long startTime = System.currentTimeMillis();
-            ByteBuffer bb = ByteBuffer.wrap((byte[]) params[0]);
+            ByteBuffer bb = ByteBuffer.wrap(buffer);
             PeopleList peopleList = PeopleList.getRootAsPeopleList(bb);
             int length = peopleList.peoplesLength();
             for (int i = 0; i < length; i++) {
