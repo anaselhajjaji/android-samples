@@ -11,6 +11,9 @@ public class AnotherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_another);
+
+        // Invoke the GC to accelerate the analysis.
+        System.gc();
     }
 
     @Override
