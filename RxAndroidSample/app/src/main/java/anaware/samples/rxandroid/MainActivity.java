@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         fetchSongs(url);
     }
 
+    // Method that will create the observable in order to perform fetching songs
     void fetchSongs(String url) {
         songsObservable(url)
                 // Run on a background thread
@@ -98,14 +99,13 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+    // Observable class that will perform background task and notify the main UI
     static Observable<List<Song>> songsObservable(final String url) {
         return Observable.defer(new Func0<Observable<List<Song>>>() {
             @Override public Observable<List<Song>> call() {
                 CloseableHttpClient httpClient = null;
                 try  {
                     httpClient = HttpClientBuilder.create().build();
-
-                    // Prepare a request object
                     HttpGet httpget = new HttpGet(url);
 
                     CloseableHttpResponse response = null;
@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // JSON parsing method using GSON
     private static List<Song> parseJson(InputStream rawJsonStream) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setDateFormat("yyyy-MM-dd'T'hh:MM:ss");
@@ -151,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
         return songs;
     }
 
+    // HandlerThread that shall be used by RxAndroid
     static class BackgroundThread extends HandlerThread {
         BackgroundThread() {
             super("SchedulerSample-BackgroundThread", THREAD_PRIORITY_BACKGROUND);
