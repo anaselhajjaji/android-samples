@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">RxAndroid Sample</string>
+    <string name="loading_msg">Loading...</string>
+    <string name="data_url_github">https://raw.githubusercontent.com/anaselhajjaji/xamarin-samples/master/TestData/songs.json</string>
+</resources>
