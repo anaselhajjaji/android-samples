@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
+import com.dslplatform.json.DslJson;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView flatbufferStatus;
     private Button jsonButton;
     private Button flatbufferButton;
+    private DslJson<Object> dslJson = new DslJson<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,15 +90,14 @@ public class MainActivity extends AppCompatActivity {
     private class JsonParsing extends AsyncTask<Object, Void, String> {
         @Override
         protected String doInBackground(Object... params) {
-            String jsonText = new String((byte[])params[0]);
+            byte[] jsonInput = (byte[])params[0];
             long startTime = System.currentTimeMillis();
-            PeopleListJson peopleList = new Gson().fromJson(jsonText, PeopleListJson.class);
-            for (int i = 0; i < peopleList.peoples.size(); i++) {
-                PeopleJson people = peopleList.peoples.get(i);
+            try {
+                PeopleListJson peopleList = dslJson.deserialize(PeopleListJson.class, jsonInput, jsonInput.length);
+                return peopleList.howLong(startTime);
+            }catch (IOException io) {
+                return io.getMessage();
             }
-            long endTime = System.currentTimeMillis() - startTime;
-            String textToShow = "Elements: " + peopleList.peoples.size() + ": load time: " + endTime + "ms";
-            return textToShow;
         }
 
         @Override
@@ -121,14 +121,8 @@ public class MainActivity extends AppCompatActivity {
             long startTime = System.currentTimeMillis();
             ByteBuffer bb = ByteBuffer.wrap(buffer);
             PeopleList peopleList = PeopleList.getRootAsPeopleList(bb);
-            int length = peopleList.peoplesLength();
-            for (int i = 0; i < length; i++) {
-                People people = peopleList.peoples(i);
-            }
-            long endTime = System.currentTimeMillis() - startTime;
-
-            String textToShow = "Elements: " + peopleList.peoplesLength() + ": load time: " + endTime + "ms";
-            return textToShow;
+            PeopleListJson people = new PeopleListJson(peopleList);
+            return people.howLong(startTime);
         }
 
         @Override
